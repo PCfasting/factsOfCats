@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <HelloWorld v-bind:value="facts"/>
   </div>
 </template>
 
@@ -12,6 +11,25 @@ export default {
   name: 'App',
   components: {
     HelloWorld
+  },
+  data(){
+    return{
+      facts: {
+        fact: ""
+      }
+    }
+  },
+  methods:{
+    getFact(){
+      this.axios.get('http://37.77.104.246/api/random-fact.php')
+      .then((response)=>{
+        this.facts.fact = response.data;
+      })
+    }
+  },
+  mounted(){
+    this.getFact();
+    
   }
 }
 </script>
